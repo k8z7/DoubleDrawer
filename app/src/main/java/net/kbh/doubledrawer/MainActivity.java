@@ -22,6 +22,10 @@ public class MainActivity extends AppCompatActivity
     static MenuItem speechMenu, explorerMenu, searchMenu;
     boolean isSpeaker = false, isSearch = false, isExplorer = false;
 
+    static LinearLayout inc_main, inc_explorer, inc_bmfh, inc_setting, inc_search, inc_help;
+    static View[] views = null; // inc_tts, slider 외의 모든 루트뷰 배열
+    static DrawerLayout drawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,39 +35,56 @@ public class MainActivity extends AppCompatActivity
         // ActionBar actionBar = getSupportActionBar();
         // actionBar.setDisplayShowTitleEnabled(false);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        initView();
+    }
+
+    // View 가져오기
+    private void initView() {
         main_drawer = (DrawerLayout)findViewById(R.id.main_drawer);
         slider = (LinearLayout)findViewById(R.id.slider);
+
+        inc_main = (LinearLayout) findViewById(R.id.inc_main);
+        inc_explorer = (LinearLayout) findViewById(R.id.inc_explorer);
+        inc_bmfh = (LinearLayout) findViewById(R.id.inc_bmfh);
+        inc_setting = (LinearLayout) findViewById(R.id.inc_setting);
+        inc_search = (LinearLayout) findViewById(R.id.inc_search);
+        inc_help = (LinearLayout) findViewById(R.id.inc_help);
+
+        views = new View[]{inc_explorer, inc_bmfh, inc_setting, inc_search, inc_help};
     }
 
-    // ContentsView 열기
-    static void openLayer() {
-        main_drawer.openDrawer(slider);
-        slider.setVisibility(View.VISIBLE);
-    }
-
-    // ContentsView 닫기
-    static void closeLayer() {
-        main_drawer.closeDrawer(slider);
-        slider.setVisibility(View.GONE);
-    }
-
+    // BackPress(백키) 처리
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            if (slider.getVisibility() == View.VISIBLE) { closeLayer(); }
-            else { super.onBackPressed(); }
+            if (slider.getVisibility() == View.VISIBLE) { Util.closeLayer(); }
+            else {
+                View opened = null;
+                for(View page:views) {
+                    if(page.getVisibility() == View.VISIBLE) {
+                        opened = page;
+                        break;
+                    }
+                }
+                if (opened != null) {
+                    Util.openPage(inc_main);
+                }
+                else {
+                    // if (mTTS.isSpeaking()) Util.stopTTS();
+                    // else finish();
+                    finish();
+                }
+            }
         }
     }
 
@@ -82,19 +103,17 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         switch (id) {
             case (R.id.action_select) :
-                if (slider.getVisibility() == View.VISIBLE) { closeLayer(); } else { openLayer(); }
+                if (slider.getVisibility() == View.VISIBLE) { Util.closeLayer(); } else { Util.openLayer(); }
                 break;
             case (R.id.action_speak) :
                 if (isSpeaker) { speechMenu.setIcon(R.drawable._speaker_off); } else { speechMenu.setIcon(R.drawable._speaker_on); }
                 isSpeaker = ! isSpeaker;
                 break;
             case (R.id.action_search) :
-                if (isSearch) { searchMenu.setIcon(R.drawable._search_off); } else { searchMenu.setIcon(R.drawable._search_on); }
-                isSearch = ! isSearch;
+                if (inc_search.getVisibility()==View.GONE) { Util.openPage(inc_search); } else { Util.openPage(inc_main); }
                 break;
             case (R.id.action_explorer) :
-                if (isExplorer) { explorerMenu.setIcon(R.drawable._ex_off); } else { explorerMenu.setIcon(R.drawable._ex_on); }
-                isExplorer = ! isExplorer;
+                if (inc_explorer.getVisibility()==View.GONE) { Util.openPage(inc_explorer); } else { Util.openPage(inc_main); }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -106,18 +125,16 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.action_select) { if (slider.getVisibility() == View.VISIBLE) { closeLayer(); } else { openLayer(); }
+        if (id == R.id.action_select) { if (slider.getVisibility() == View.VISIBLE) { Util.closeLayer(); } else { Util.openLayer(); }
         } else if (id == R.id.action_speak) { if (isSpeaker) { speechMenu.setIcon(R.drawable._speaker_off); } else { speechMenu.setIcon(R.drawable._speaker_on);
             isSpeaker = ! isSpeaker; }
-        } else if (id == R.id.action_search) { if (isSearch) { searchMenu.setIcon(R.drawable._search_off); } else { searchMenu.setIcon(R.drawable._search_on);
-            isSearch = ! isSearch; }
-        } else if (id == R.id.action_explorer) { if (isExplorer) { explorerMenu.setIcon(R.drawable._ex_off); } else { explorerMenu.setIcon(R.drawable._ex_on);
-            isExplorer = ! isExplorer; }
+        } else if (id == R.id.action_search) { if (inc_search.getVisibility()==View.GONE) { Util.openPage(inc_search); } else { Util.openPage(inc_main); }
+        } else if (id == R.id.action_explorer) { if (inc_explorer.getVisibility()==View.GONE) { Util.openPage(inc_explorer); } else { Util.openPage(inc_main); }
         }
         else if (id == R.id.action_bmSave) { Toast.makeText(this, "action_bmSave", Toast.LENGTH_SHORT).show(); }
-        else if (id == R.id.action_setSpeech) { Toast.makeText(this, "action_setSpeech", Toast.LENGTH_SHORT).show(); }
-        else if (id == R.id.action_bmfh) { Toast.makeText(this, "action_bmfh", Toast.LENGTH_SHORT).show(); }
-        else if (id == R.id.action_help) { Toast.makeText(this, "action_help", Toast.LENGTH_SHORT).show(); }
+        else if (id == R.id.action_setting) { if (inc_setting.getVisibility()==View.GONE) { Util.openPage(inc_setting); } else { Util.openPage(inc_main); } }
+        else if (id == R.id.action_bmfh) { if (inc_bmfh.getVisibility()==View.GONE) { Util.openPage(inc_bmfh); } else { Util.openPage(inc_main); } }
+        else if (id == R.id.action_help) { if (inc_help.getVisibility()==View.GONE) { Util.openPage(inc_help); } else { Util.openPage(inc_main); } }
         else if (id == R.id.action_install) { Toast.makeText(this, "action_install", Toast.LENGTH_SHORT).show(); }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

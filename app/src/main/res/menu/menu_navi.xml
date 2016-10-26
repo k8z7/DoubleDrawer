@@ -8,7 +8,7 @@
     </group>
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/action_setSpeech" android:title="- 읽기 속도/톤(피치)/언어 설정" />
+        <item android:id="@+id/action_setting" android:title="- 읽기 속도/톤(피치)/언어 설정" />
         <item android:id="@+id/action_bmfh" android:title="- 책갈피/history 관리(읽기/삭제)" />
     </group>
 

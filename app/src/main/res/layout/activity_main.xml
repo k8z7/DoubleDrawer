@@ -38,11 +38,20 @@
                 android:layout_height="match_parent"
                 tools:openDrawer="start">
 
-                <TextView
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:background="#ffffee"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Hello World!"
-                    android:gravity="center" />
+                    android:layout_height="match_parent">
+
+                    <include layout="@layout/help_page" />
+                    <include layout="@layout/search_page" />
+                    <include layout="@layout/bmfh_page" />
+                    <include layout="@layout/explorer_page" />
+                    <include layout="@layout/setting_page" />
+                    <include layout="@layout/main_page" />
+
+                </LinearLayout>
 
                 <!-- 슬라이드 레이아웃 -->
                 <LinearLayout
