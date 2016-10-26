@@ -17,14 +17,13 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     static LinearLayout slider;
-    static DrawerLayout main_drawer;
+    static DrawerLayout drawer, main_drawer;
 
     static MenuItem speechMenu, explorerMenu, searchMenu;
     boolean isSpeaker = false, isSearch = false, isExplorer = false;
 
     static LinearLayout inc_main, inc_explorer, inc_bmfh, inc_setting, inc_search, inc_help;
     static View[] views = null; // inc_main 외의 모든 루트뷰 배열
-    static DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +136,6 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.action_help) { if (inc_help.getVisibility()==View.GONE) { Util.openPage(inc_help); } else { Util.openPage(inc_main); } }
         else if (id == R.id.action_install) { Toast.makeText(this, "action_install", Toast.LENGTH_SHORT).show(); }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

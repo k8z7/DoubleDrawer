@@ -26,11 +26,9 @@ public class Util {
         // 모든 페이지 닫기
         int id = view.getId();
         for(View page: MainActivity.views) page.setVisibility(View.GONE);
-        if (id==R.id.action_search) { MainActivity.inc_search.setVisibility(View.VISIBLE); MainActivity.searchMenu.setIcon(R.drawable._search_on); } else { MainActivity.searchMenu.setIcon(R.drawable._search_off); }
-        if (id==R.id.action_explorer) { MainActivity.inc_explorer.setVisibility(View.VISIBLE); MainActivity.explorerMenu.setIcon(R.drawable._ex_on); } else { MainActivity.explorerMenu.setIcon(R.drawable._ex_off); }
-        if (id==R.id.action_bmfh) { MainActivity.inc_bmfh.setVisibility(View.VISIBLE); } else { }
-        if (id==R.id.action_help) { MainActivity.inc_help.setVisibility(View.VISIBLE); } else { }
-        if (id==R.id.action_setting) { MainActivity.inc_setting.setVisibility(View.VISIBLE); } else { }
+        // 아이콘, 기타 설정
+        if (id==R.id.inc_search) { MainActivity.searchMenu.setIcon(R.drawable._search_on); } else { MainActivity.searchMenu.setIcon(R.drawable._search_off); }
+        if (id==R.id.inc_explorer) { MainActivity.explorerMenu.setIcon(R.drawable._ex_on); } else { MainActivity.explorerMenu.setIcon(R.drawable._ex_off); }
         // 파라미터 페이지 열기
         view.setVisibility(View.VISIBLE);
     }
