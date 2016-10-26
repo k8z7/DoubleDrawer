@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_select"
+        android:title="성경 선택"
+        android:icon="@drawable/_bible_open"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_speak"
+        android:title="음성출력"
+        android:icon="@drawable/_speaker_off"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_search"
+        android:title="[성경검색]"
+        android:icon="@drawable/_search_off"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/action_explorer"
+        android:title="탐색기 파일선택"
+        android:icon="@drawable/_ex_off"
+        app:showAsAction="always"/>
+
+</menu>

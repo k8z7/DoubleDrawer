@@ -32,16 +32,49 @@
             android:layout_height="match_parent"
             tools:openDrawer="start">
 
-            <include layout="@layout/content_main" />
+            <android.support.v4.widget.DrawerLayout
+                android:id="@+id/main_drawer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:openDrawer="start">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Hello World!"
+                    android:gravity="center" />
+
+                <!-- 슬라이드 레이아웃 -->
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/slider"
+                    android:orientation="vertical"
+                    android:background="#5F00FF"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="이것 참 기가 막히네!"
+                        android:background="#11ff0000" />
+
+                </LinearLayout>
+
+            </android.support.v4.widget.DrawerLayout>
 
             <android.support.design.widget.NavigationView
                 android:id="@+id/nav_view"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
+                app:menu="@menu/menu_navi" />
+            <!--
                 android:fitsSystemWindows="false"
                 app:headerLayout="@layout/nav_header_main"
-                app:menu="@menu/activity_main_drawer" />
+            //-->
 
         </android.support.v4.widget.DrawerLayout>
 

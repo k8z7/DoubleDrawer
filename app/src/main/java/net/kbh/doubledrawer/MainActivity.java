@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -18,12 +19,17 @@ public class MainActivity extends AppCompatActivity
     static LinearLayout slider;
     static DrawerLayout main_drawer;
 
+    static MenuItem speechMenu, explorerMenu, searchMenu;
+    boolean isSpeaker = false, isSearch = false, isExplorer = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        // ActionBar actionBar = getSupportActionBar();
+        // actionBar.setDisplayShowTitleEnabled(false);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -64,7 +70,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        speechMenu = menu.findItem(R.id.action_speak);
+        explorerMenu = menu.findItem(R.id.action_explorer);
+        searchMenu = menu.findItem(R.id.action_search);
         return true;
     }
 
@@ -72,8 +81,21 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case (R.id.action_settings) : break;
-            case (R.id.action_1) : if (slider.getVisibility() == View.VISIBLE) { closeLayer(); } else { openLayer(); } break;
+            case (R.id.action_select) :
+                if (slider.getVisibility() == View.VISIBLE) { closeLayer(); } else { openLayer(); }
+                break;
+            case (R.id.action_speak) :
+                if (isSpeaker) { speechMenu.setIcon(R.drawable._speaker_off); } else { speechMenu.setIcon(R.drawable._speaker_on); }
+                isSpeaker = ! isSpeaker;
+                break;
+            case (R.id.action_search) :
+                if (isSearch) { searchMenu.setIcon(R.drawable._search_off); } else { searchMenu.setIcon(R.drawable._search_on); }
+                isSearch = ! isSearch;
+                break;
+            case (R.id.action_explorer) :
+                if (isExplorer) { explorerMenu.setIcon(R.drawable._ex_off); } else { explorerMenu.setIcon(R.drawable._ex_on); }
+                isExplorer = ! isExplorer;
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -84,22 +106,23 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        if (id == R.id.action_select) { if (slider.getVisibility() == View.VISIBLE) { closeLayer(); } else { openLayer(); }
+        } else if (id == R.id.action_speak) { if (isSpeaker) { speechMenu.setIcon(R.drawable._speaker_off); } else { speechMenu.setIcon(R.drawable._speaker_on);
+            isSpeaker = ! isSpeaker; }
+        } else if (id == R.id.action_search) { if (isSearch) { searchMenu.setIcon(R.drawable._search_off); } else { searchMenu.setIcon(R.drawable._search_on);
+            isSearch = ! isSearch; }
+        } else if (id == R.id.action_explorer) { if (isExplorer) { explorerMenu.setIcon(R.drawable._ex_off); } else { explorerMenu.setIcon(R.drawable._ex_on);
+            isExplorer = ! isExplorer; }
         }
+        else if (id == R.id.action_bmSave) { Toast.makeText(this, "action_bmSave", Toast.LENGTH_SHORT).show(); }
+        else if (id == R.id.action_setSpeech) { Toast.makeText(this, "action_setSpeech", Toast.LENGTH_SHORT).show(); }
+        else if (id == R.id.action_bmfh) { Toast.makeText(this, "action_bmfh", Toast.LENGTH_SHORT).show(); }
+        else if (id == R.id.action_help) { Toast.makeText(this, "action_help", Toast.LENGTH_SHORT).show(); }
+        else if (id == R.id.action_install) { Toast.makeText(this, "action_install", Toast.LENGTH_SHORT).show(); }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }

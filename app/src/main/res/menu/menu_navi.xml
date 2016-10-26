@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/action_bmSave" android:title="[책갈피 저장하기]" />
+        <item android:id="@+id/action_help" android:title="[도움말 열기/닫기]" />
+        <item android:id="@+id/action_install" android:title="[성경파일 설치]"/>
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/action_setSpeech" android:title="- 읽기 속도/톤(피치)/언어 설정" />
+        <item android:id="@+id/action_bmfh" android:title="- 책갈피/history 관리(읽기/삭제)" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/action_select" android:title="[성경 선택]" />
+        <item android:id="@+id/action_speak" android:title="[음성 출력]" />
+        <item android:id="@+id/action_search" android:title="[성경 검색]" />
+        <item android:id="@+id/action_explorer" android:title="[탐색기 파일선택]" />
+    </group>
+
+</menu>
