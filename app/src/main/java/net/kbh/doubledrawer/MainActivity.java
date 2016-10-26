@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity
     boolean isSpeaker = false, isSearch = false, isExplorer = false;
 
     static LinearLayout inc_main, inc_explorer, inc_bmfh, inc_setting, inc_search, inc_help;
-    static View[] views = null; // inc_tts, slider 외의 모든 루트뷰 배열
+    static View[] views = null; // inc_main 외의 모든 루트뷰 배열
     static DrawerLayout drawer;
 
     @Override
